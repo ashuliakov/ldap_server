@@ -1,0 +1,25 @@
+---
+# tasks file for /etc/ansible/roles/database
+  - name: Install MySQL
+    apt: 
+       name: mysql-server 
+       state: installed 
+       update-cache: yes
+  - name: Install MySQL-python module
+    apt: 
+       name: python-mysqldb 
+       state: installed 
+  - name: Restart MySQL
+    service: 
+       name: mysql 
+       state: restarted 
+       enabled: yes
+  - name: Create mysql database
+    mysql_db: 
+       name: "{{ wp_mysql_db }}" 
+       state: present
+  - name: Create mysql user
+    mysql_user: 
+       name: "{{ wp_mysql_user }}" 
+       password: "{{ wp_mysql_password }}" 
+       priv: '*.*:ALL'

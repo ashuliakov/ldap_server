@@ -1,0 +1,16 @@
+---
+# tasks file for /etc/ansible/roles/frontend
+     - name: Install Nginx load balancer
+       apt: 
+          name: nginx 
+          state: installed 
+          update-cache: yes
+     - name: Copy config
+       copy: 
+          src: files/nginx_loadbalancer.conf 
+          dest: /etc/nginx/nginx.conf
+     - name: Restart Nginx load balancer
+       service: 
+          name: nginx 
+          state: restarted 
+          enabled: yes

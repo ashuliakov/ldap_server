@@ -1,0 +1,7 @@
+---
+  - name: Frontend servers install
+    hosts: fe_servers
+    remote_user: alex
+    sudo: yes
+    roles:
+       - frontend

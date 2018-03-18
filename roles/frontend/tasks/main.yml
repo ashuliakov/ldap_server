@@ -5,10 +5,12 @@
           name: nginx 
           state: installed 
           update-cache: yes
+
      - name: Copy config
        copy: 
           src: files/nginx_loadbalancer.conf 
           dest: /etc/nginx/nginx.conf
+
      - name: Restart Nginx load balancer
        service: 
           name: nginx 

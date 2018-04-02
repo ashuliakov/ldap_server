@@ -42,14 +42,7 @@
 
 #db-[99:101]-node.example.com
 
-[fe_servers]
-#host1.test.org 
-192.168.1.145 ansible_ssh_pass=123 ansible_ssh_user=alex
-
-[be_servers]
-#host2.test.org 
-192.168.1.64 ansible_ssh_pass=123 ansible_ssh_user=alex
-
-[db_servers]
-#host3.test.org 
+[ldap-servers]
+#ldap1.example.org 
+#ldap2.example.org 
 192.168.1.224 ansible_ssh_pass=123 ansible_ssh_user=alex

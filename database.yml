@@ -1,7 +1,0 @@
----
-  - name: Database servers install
-    hosts: db_servers
-    remote_user: alex
-    sudo: yes
-    roles:
-       - database

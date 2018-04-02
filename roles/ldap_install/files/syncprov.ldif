@@ -1,0 +1,18 @@
+dn: cn=module{0},cn=config
+changetype: modify
+add: olcModuleLoad
+olcModuleLoad: {1}syncprov
+
+dn: olcDatabase={1}hdb,cn=config
+changetype: add
+olcSyncrepl: {0}rid=004 provider=ldap://ldapserver1.example.com  binddn="cn=admin,dc=example,dc=com" bindmethod=simple credentials=secret searchbase="dc=example,dc=com" type=refreshAndPersist retry="5 5 10 +"
+olcSyncrepl: {1}rid=005 provider=ldap://ldapserver2.example.com  binddn="cn=admin,dc=example,dc=com" bindmethod=simple credentials=secret searchbase="dc=example,dc=com" type=refreshAndPersist retry="5 5 10 +"
+olcMirrorMode: TRUE
+
+dn: olcOverlay={0}syncprov,olcDatabase={1}hdb,cn=config
+changetype: add
+objectClass: olcOverlayConfig
+objectClass: olcConfig
+objectClass: top
+objectClass: olcSyncProvConfig
+olcOverlay: {0}syncprov

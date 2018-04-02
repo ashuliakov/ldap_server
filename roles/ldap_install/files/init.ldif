@@ -1,0 +1,41 @@
+dn: cn=config
+objectClass: olcGlobal
+cn: config
+olcArgsFile: /var/run/slapd/slapd.args
+olcPidFile: /var/run/slapd/slapd.pid
+
+dn: cn=module{0},cn=config
+objectClass: olcModuleList
+cn: module{0}
+olcModuleLoad: {0}back_hdb
+olcModulePath: /usr/lib/ldap
+
+dn: cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: schema
+
+include: file:///etc/ldap/schema/core.ldif
+include: file:///etc/ldap/schema/cosine.ldif
+include: file:///etc/ldap/schema/inetorgperson.ldif
+include: file:///etc/ldap/schema/misc.ldif
+include: file:///etc/ldap/schema/nis.ldif
+
+dn: olcDatabase={0}config,cn=config
+objectClass: olcDatabaseConfig
+olcDatabase: {0}config
+olcRootPW: {SSHA}1NcAEJCW04lF77VgIcsYm0z9CYNA+Xoq
+
+dn: olcDatabase={1}hdb,cn=config
+olcDbDirectory: /var/lib/ldap/dc=example,dc=com
+objectClass: olcHdbConfig
+objectClass: olcDatabaseConfig
+olcDatabase: {1}hdb
+#olcAccess: {0}to * by dn="cn=admin,dc=example,dc=com" read
+#olcAccess: {0}to attrs=userPassword by self write by anonymous auth by * non
+ e
+#olcAccess: {1}to attrs=shadowLastChange by self write by * read
+#olcAccess: {2}to * by * read
+#olcLastMod: TRUE
+olcRootDN: cn=admin,dc=example,dc=com
+olcRootPW: {SSHA}diIumrpiIZkWtfTJxBxOfVXwqLMCIqYc
+olcSuffix: dc=example,dc=com

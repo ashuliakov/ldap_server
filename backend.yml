@@ -1,7 +1,0 @@
----
-  - name: Backend servers install
-    hosts: be_servers
-    remote_user: alex
-    sudo: yes
-    roles:
-       - backend

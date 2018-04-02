@@ -1,0 +1,11 @@
+dn: ou=Users,dc=example,dc=com
+objectClass: top
+objectClass: organizationalUnit
+ou: Users
+
+dn: uid=zabbix,ou=Users,dc=example,dc=com
+objectClass: inetOrgPerson
+cn: zabbix
+sn: zabbix
+uid: zabbix
+userPassword: {SSHA}XeFoDjcV+Bn3uOjljhR7YPT6bNdE+sxT

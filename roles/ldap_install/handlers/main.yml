@@ -1,0 +1,13 @@
+---
+# handlers file for /etc/ansible/roles/ldap_install
+
+- name: stop slapd 
+  service: 
+    name: slapd 
+    state: stopped 
+
+- name: start slapd 
+  service: 
+    name: slapd 
+    state: started 
+    enabled: yes 

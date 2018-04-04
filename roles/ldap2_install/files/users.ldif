@@ -1,0 +1,21 @@
+dn: ou=Users,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: organizationalUnit
+ou: Users
+
+dn: uid=Admin,ou=Users,dc=example,dc=com
+changetype: add
+objectClass: inetOrgPerson
+cn: Zabbix Administrator
+sn: Administrator
+uid: Admin
+userPassword: {SSHA}XeFoDjcV+Bn3uOjljhR7YPT6bNdE+sxT
+
+dn: uid=Alex,ou=Users,dc=example,dc=com
+changetype: add
+objectClass: inetOrgPerson
+cn: Alex Tkachuk
+sn: Tkachuk
+uid: Alex
+userPassword: {SSHA}4FfuFnyBH+KSwPvw2lP9tSS4Yb5zg4Zu

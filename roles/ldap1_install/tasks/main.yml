@@ -1,0 +1,107 @@
+---
+# tasks file for /etc/ansible/roles/ldap1_install
+
+- name: Install OpenLDAP packages
+  apt: 
+      name: "{{ item }}" 
+      state: installed
+      update_cache: yes
+  with_items:
+      - slapd
+      - ldap-utils
+
+- name: stop slapd service
+  shell: service slapd stop
+
+- name: Clean slapd configuration directory
+  shell: rm -rf /etc/ldap/slapd.d/* 
+
+- name: Clean /var/lib/ldap configuration directory
+  shell: rm -rf /var/lib/ldap/dc=example* 
+
+- name: insert line in file /etc/hosts
+  lineinfile: dest=/etc/hosts line="52.214.226.79 ldapserver1 ldapserver1.example.com"
+
+- name: insert other line in file /etc/hosts
+  lineinfile: dest=/etc/hosts line="54.154.170.113 ldapserver2 ldapserver2.example.com"
+
+- name: Copy init.ldif file to ldap server 
+  copy:
+    src: files/init.ldif
+    dest: /etc/ldap/init.ldif
+    owner: openldap
+    group: openldap
+    mode: 0666
+
+- name: Copy baseDN.ldif file to ldap server 
+  copy:
+    src: files/baseDN.ldif
+    dest: /etc/ldap/baseDN.ldif
+    owner: openldap
+    group: openldap
+    mode: 0644
+
+- name: Copy admin.ldif file to ldap server 
+  copy:
+    src: files/admin.ldif
+    dest: /etc/ldap/admin.ldif
+    owner: openldap
+    group: openldap
+    mode: 0644
+
+- name: Copy users.ldif file to ldap server 
+  copy:
+    src: files/users.ldif
+    dest: /etc/ldap/users.ldif
+    owner: openldap
+    group: openldap
+    mode: 0644
+
+- name: Copy syncprov1.ldif file to ldap server 
+  copy:
+    src: files/syncprov1.ldif
+    dest: /etc/ldap/syncprov1.ldif
+    owner: openldap
+    group: openldap
+    mode: 0644
+
+- name: Create directory for users database
+  shell: mkdir -p /var/lib/ldap/dc=example,dc=com 
+
+- name: Initialize ldap server database
+  shell: slapadd -n 0 -F /etc/ldap/slapd.d -l /etc/ldap/init.ldif 2> /dev/null
+
+- name: Copy a configured default_slapd file to ldap server
+  copy:
+    src: files/default_slapd
+    dest: /etc/default/slapd
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy DB_CONFIG file 
+  copy:
+    src: files/DB_CONFIG
+    dest: /var/lib/ldap/dc=example,dc=com
+    mode: 0644
+
+- name: Set permissions for /var/lib/ldap/dc=example,dc=com
+  shell: chown -R openldap:openldap /var/lib/ldap/dc=example,dc=com
+
+- name: Set permissions for /etc/ldap/slapd.d
+  shell: chown -R openldap:openldap /etc/ldap/slapd.d
+
+- name: restart slapd service
+  shell: service slapd restart
+
+- name: Add baseDN entry to ldap server database
+  shell: ldapmodify -x -H ldapi:// -D 'cn=admin,dc=example,dc=com' -w test01 -f /etc/ldap/baseDN.ldif >/dev/null 
+
+- name: Add admin entry to ldap server database
+  shell: ldapmodify -x -H ldapi:// -D 'cn=admin,dc=example,dc=com' -w test01 -f /etc/ldap/admin.ldif >/dev/null 
+
+#- name: Add zabbix users to ldap server database
+#  shell: ldapmodify -x -H ldapi:// -D 'cn=admin,dc=example,dc=com' -w test01 -f /etc/ldap/users.ldif >/dev/null 
+
+- name: Add multi-master config to ldap server1 database
+  shell: ldapmodify -x -H ldapi:// -D 'cn=config' -w test01 -f /etc/ldap/syncprov1.ldif >/dev/null

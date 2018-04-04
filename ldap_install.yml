@@ -1,7 +1,0 @@
----
-  - name: OpenLDAP servers install
-    hosts: ldap-servers
-    remote_user: alex
-    sudo: yes
-    roles:
-       - ldap_install

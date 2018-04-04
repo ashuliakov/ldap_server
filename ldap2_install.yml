@@ -1,0 +1,7 @@
+---
+  - name: OpenLDAP server2 install
+    hosts: 54.154.170.113
+    remote_user: ubuntu
+    sudo: yes
+    roles:
+       - ldap2_install

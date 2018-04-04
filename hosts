@@ -43,6 +43,7 @@
 #db-[99:101]-node.example.com
 
 [ldap-servers]
-#ldap1.example.com 
-#ldap2.example.com 
-192.168.1.224 ansible_ssh_pass=123 ansible_ssh_user=alex
+#ldapserver1
+52.214.226.79
+#ldapserver2
+54.154.170.113

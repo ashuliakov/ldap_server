@@ -1,0 +1,7 @@
+---
+  - name: OpenLDAP server1 install
+    hosts: 52.214.226.79
+    remote_user: ubuntu
+    sudo: yes
+    roles:
+       - ldap1_install

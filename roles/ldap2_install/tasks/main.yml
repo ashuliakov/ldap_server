@@ -31,7 +31,15 @@
     dest: /etc/ldap/init.ldif
     owner: openldap
     group: openldap
-    mode: 0666
+    mode: 0644
+
+- name: Copy ldap.ldif file to ldap server
+  copy:
+    src: files/ldap.ldif
+    dest: /etc/ldap/ldap.ldif
+    owner: openldap
+    group: openldap
+    mode: 0644
 
 - name: Copy baseDN.ldif file to ldap server 
   copy:
